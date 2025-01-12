@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="linebreak" file="linebreak" main="Main" version="0.0.1" company="HaxeFlixel" />
+	<app title="linebreak" file="linebreak" main="Main" version="0.0.1" company="Sinco" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -40,6 +40,11 @@
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
+
+	<!-- ______________________________ Sincdefines _____________________________ -->
+
+	<define name="SCRIPT_FILES" />
+	<define name="SCRIPT_FILES_IN_DATA_FOLDER" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
