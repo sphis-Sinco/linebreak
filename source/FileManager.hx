@@ -20,7 +20,7 @@ class FileManager
 			MAYBE there is now a feature flag required to be specified for specific functions to function. 
 			I mean these can be big too but yknow. 1 thing at a time.
 	 */
-	public static var FILE_MANAGER_VERSION:Float = 3.4;
+	public static var FILE_MANAGER_VERSION:Float = 3.5;
 
 	public static function getPath(path:String, ?PATH_TYPE:PathTypes = DEFAULT):String
 		return 'assets/$PATH_TYPE/$path';
@@ -40,6 +40,13 @@ class FileManager
 		#end
 
 		return getAssetFile(finalPath, PATH_TYPE);
+	}
+	#else
+	public static var SCRIPT_EXT:String = '';
+
+	public static function getScriptFile(?file:String = "", ?PATH_TYPE:PathTypes = DEFAULT):String
+	{
+		return "";
 	}
 	#end
 
