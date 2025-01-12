@@ -41,6 +41,8 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 
+	<haxelib name="hxp" />
+
 	<!-- ______________________________ Sincdefines _____________________________ -->
 
 	<define name="SCRIPT_FILES" />
