@@ -7,14 +7,21 @@ class FileManager
 
 	/**
 		this is the amount of times ive used this script
-		and changed it a bit in which the changes can be used in other games
+		and changed it a bit in which the changes can be used in other games.
 
 		SYNTAX: `major`.`minor`
 			
-		@param major it has some BIG changes like a new way of managing files... new way of returning them. ETC.
-		@param minor small changes MAYBE there is now a feature flag required to be specified for specific functions to function
+		@param major 
+			it has some BIG changes like a new way of managing files... 
+			new way of returning them. ETC. 	
+			Also this is just what I said earlier. 
+			the amount of times ive used this script and changed it a bit in which the changes can be used in other games.
+		@param minor 
+			small changes to the specific major version. 
+			MAYBE there is now a feature flag required to be specified for specific functions to function. 
+			I mean these can be big too but yknow. 1 thing at a time.
 	 */
-	public static var FILE_MANAGER_VERSION:Float = 3.1;
+	public static var FILE_MANAGER_VERSION:Float = 3.2;
 
 	public static function getPath(path:String, ?PATH_TYPE:PathTypes = ASSETS):String
 		return '$PATH_TYPE/$path';
@@ -24,9 +31,17 @@ class FileManager
 
 	#if SCRIPT_FILES
 	public static var SCRIPT_EXT:String = 'lb';
-    
+
 	public static function getScriptFile(file:String, ?PATH_TYPE:PathTypes = ASSETS):String
-		return getPath('scripts/$file.$SCRIPT_EXT', PATH_TYPE);
+	{
+		var finalPath:Dynamic = 'scripts/$file.$SCRIPT_EXT';
+
+		#if SCRIPT_FILES_IN_DATA_FOLDER
+		return getDataFile(finalPath, PATH_TYPE);
+		#end
+
+		return getPath(finalPath, PATH_TYPE);
+	}
 	#end
 
 	public static function getDataFile(file:String, ?PATH_TYPE:PathTypes = ASSETS):String
