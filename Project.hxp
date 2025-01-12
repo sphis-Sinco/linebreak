@@ -34,7 +34,7 @@ class Project extends HXProject {
         displayTarget();
 		configureFeatureFlags();
 
-        addAssetPath("assets", "assets", "default", [], []);
+		includeAssets("assets");
 
         configureApp();
 		configureOutputDir();
