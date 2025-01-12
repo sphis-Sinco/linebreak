@@ -20,12 +20,6 @@ class LineBreakFile
 		try
 		{
 			filecontent = Assets.getText(this.filepath).split('\n');
-			/*var line:Int = 1;
-			for (item in filecontent)
-			{
-																																																																										trace('${item}');
-				line++;
-			}*/
 		}
 		catch (e)
 		{
@@ -37,6 +31,12 @@ class LineBreakFile
 
 class LineBreakFileParser
 {
+	static var current_function:String = "";
+	static var function_arguments:Array<Dynamic> = [""];
+
+	static var is_comment:Bool = false;
+	static var is_print_function:Bool = false;
+
 	public static function parse(filepath:String):Int
 	{
 		trace('Preparing to parse "$filepath"');
@@ -56,12 +56,6 @@ class LineBreakFileParser
 		{
 			trace('"$filepath" has the length of ${filecontent.length} lines');
 
-			var current_function:String = "";
-			var function_arguments:Array<Dynamic> = [""];
-
-			var is_comment:Bool = false;
-			var is_print_function:Bool = false;
-
 			var linenumber:Int = 0;
 
 			for (line in filecontent)
@@ -70,26 +64,21 @@ class LineBreakFileParser
 
 				is_comment = line.startsWith(";");
 
-				if (is_comment == false)
+				if (!is_comment)
 				{
-					if (line.contains('(') || line.contains(')'))
+					if (line.contains('/'))
 					{
-						trace(line);
-
-						var charidx:Int = 1;
-						for (char in line)
+						var before:Null<String> = "";
+						var after:Null<String> = "";
+						for (charidx in 0...line.length)
 						{
-							if (charidx == line.length)
+							before = line.charAt(charidx - 1);
+							after = line.charAt(charidx + 1);
+							switch (line.charAt(charidx))
 							{
-								switch (line.charAt(char))
-								{
-									case '(':
-										trace('$line is the start of a function');
-									case ')':
-										trace('$line is the end of a function');
-								}
+								case '/':
+										setfunction(line);
 							}
-							charidx++;
 						}
 					}
 				}
@@ -100,6 +89,37 @@ class LineBreakFileParser
 		else
 		{
 			return 0; // failure
+		}
+	}
+
+	static var valid_functions:Array<String> = [
+		"info",
+		"printF",
+		"printT",
+	];
+
+	static var valid_function_declarations:Array<String> = [
+		"overW ",
+		"local ",
+		"call "
+	];
+
+	public static function setfunction(line:String)
+	{
+		var readline:String = line;
+
+		for (declaration in valid_function_declarations)
+			{
+				if (line.startsWith(declaration))
+				{
+					readline = line.split(declaration)[0];
+				}
+			}
+
+		if (current_function == "" && valid_functions.contains(readline.split('/')[0])) {
+			current_function = readline.split('/')[0];
+		} else if (current_function != "") {
+			current_function = "";
 		}
 	}
 }
