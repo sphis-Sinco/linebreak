@@ -67,53 +67,34 @@ class LineBreakFileParser
 			for (line in filecontent)
 			{
 				linenumber++;
-				trace(line);
 
 				is_comment = line.startsWith(";");
 
-				if (current_function == "")
+				if (is_comment == false)
 				{
-					trace("No Function in Place");
-					if (line.charAt(line.length) == '(')
+					if (line.contains('(') || line.contains(')'))
 					{
-						current_function = line.split('(')[0];
-						trace(current_function);
-					}
-				}
-				else if (is_print_function || current_function != "")
-				{
-					trace("Function in Place");
+						trace(line);
 
-					if (line.charAt(0) == ')')
-					{
-						trace("Function Ending");
-						switch (current_function)
+						var charidx:Int = 1;
+						for (char in line)
 						{
-							case "printT":
-								trace(function_arguments[0], {
-									fileName: FileManager.getScriptFile(filepath).replace('assets/', '') + "." + FileManager.SCRIPT_EXT,
-									lineNumber: linenumber,
-									className: "filepath",
-									methodName: current_function,
-									customParams: ""
-								});
-								is_print_function = false;
+							if (charidx == line.length)
+							{
+								switch (line.charAt(char))
+								{
+									case '(':
+										trace('$line is the start of a function');
+									case ')':
+										trace('$line is the end of a function');
+								}
+							}
+							charidx++;
 						}
-
-						current_function = "";
-						function_arguments = [];
 					}
-				}
-
-				is_print_function = false;
-				switch (current_function)
-				{
-					case "printT":
-						is_print_function = true;
-						if (line.startsWith('"') && line.endsWith('"'))
-							function_arguments.push(line.split('"')[1]);
 				}
 			}
+
 			return 1; // success
 		}
 		else
